@@ -1,6 +1,10 @@
+var running = true;
+var winner = 0;
+
 function check_valid_move(board,row,column) {
-    if(board[row][column].occupied == true) {
-    $('.status').html("There is already a coin on this field, try another one");
+	if(running == false) { return false; }
+	if(board[row][column].occupied == true) {
+    $('.status').html("There is already a coin on this field, try another one.");
     return false;
     } else {
     return true
@@ -24,111 +28,81 @@ function change_player(playerindex) {
   return playerindex;
 }
 
-function get_horizontal_pieces(board,row,playerindex) {
-    var pieces = []
-
-    //for(var i in board) {
-        for(var j in board[row]) {
-        if(board[row][j].occupied == true && board[row][j].by == playerindex)
-        {
-            pieces.push(board[row][j]);
-            //check horizontal
-        }
-      }
-      //}
-     return pieces;
-}
-
-function get_vertical_pieces(board,column,playerindex) {
-    var pieces = []
-
-    //for(var i in board) {
-        for(var j in board) {
-        if(board[j][column].occupied == true && board[j][column].by == playerindex)
-        {
-            pieces.push(board[j][column]);
-            //check horizontal
-        }
-      }
-      //}
-     return pieces;
-}
-
-
-//not fully working * diagonal check not included * inefficient code :(
 function determine_if_winner_exists(board,row,column,playerindex) {
-    //search for a place on the board that contains a coin
-    for(var i = 0;i<10;i++)
-    {
-    var pieces = get_horizontal_pieces(board,i,playerindex);
 
-    var last_x = -1;
-    var last_y = -1;
-    var counter_x = 1;
-    var counter_y = 1;
+var right = 0;
+var left = 0;
+var top = 0;
+var down = 0;
+var right_top = 0;
+var right_down = 0;
+var left_top = 0;
+var left_down = 0;
 
+for(var i = 1;i<4;i++) {
+	if(row-i<0) {break; }
+    if (board[row-i][column].by == playerindex) { top++; }
+	else { break; }
+}
 
-    for(var j in pieces) {
+for(var i = 1;i<4;i++) {
+	if(column-i<0) {break; }
+	if (board[row][column-i].by == playerindex) { left++; }
 
-        var x = pieces[j].x;
-        var y = pieces[j].y;
+	else { break; }
+}
 
-        //if(board[x][y])
+for(var i = 1;i<4;i++) {
+	if(column+i>9) {break; }
+	if(board[row][column+i].by == playerindex) { right++; }
 
-        if(pieces[j].x == (last_x + 1))
-        {
-        counter_x++;
-        last_x = pieces[j].x;
-        }
-        else
-        {
-        counter_x = 1;
-        last_x = pieces[j].x;
-        }
-        if(counter_x == 4) {
-        alert("Winner detected! Player " + playerindex + "has won the game.");
-        break;
-        }
+	else { break; }
+}
 
-    }
-    }
+for(var i = 1;i<4;i++) {
+	if(row+i>9) {break; }
+	if (board[row+i][column].by == playerindex) { down++; }
 
-
-for(var i = 0;i<10;i++)
-    {
-    var pieces = get_vertical_pieces(board,i,playerindex);
-
-    var last_x = -1;
-    var last_y = -1;
-    var counter_x = 1;
-    var counter_y = 1;
+	else { break; }
+}
 
 
-    for(var j in pieces) {
 
-        if(pieces[j].y == (last_y + 1))
-        {
-        counter_y++;
-        last_y = pieces[j].y;
-        }
-        else
-        {
-        counter_y = 1;
-        last_y = pieces[j].y;
-        }
+for(var i = 1;i<4;i++) {
+	if(row-i<0 || column+i>9) {break; }
+	if (board[row-i][column+i].by == playerindex) { right_top++; }
+	else { break; }
+}
 
-        if(counter_y == 4) {
-        alert("Winner detected! Player " + playerindex + "has won the game.");
-        break;
-        }
+for(var i = 1;i<4;i++) {
+	if(row-i<0 || column-i<0) {break; }
+	if (board[row-i][column-i].by == playerindex) { left_top++; }
+	else { break; }
+}
 
-    }
-    }
+for(var i = 1;i<4;i++) {
+	if(row+i>9 || column+i>9) {break; }
+	if (board[row+i][column+i].by == playerindex) { right_down++; }
+	else { break; }
+}
 
+for(var i = 1;i<4;i++) {
+	if(row+i>9 || column-i<0) {break; }
+	if (board[row+i][column-i].by == playerindex) { left_down++; }
+	else { break; }
+}
+
+var total_horizontal = left + right + 1;
+var total_vertical = top + down + 1;
+var total_diagonal_1 = left_top + right_down + 1;
+var total_diagonal_2 = right_top + left_down + 1;
+
+if(total_horizontal > 3 || total_vertical > 3 || total_diagonal_1 > 3 || total_diagonal_2 > 3) { running = false; winner = playerindex; $('.status').html("There is a winner. Player " + winner + " has won the game! <button onclick=location.reload(true)>Start a new game!</button>"); }
 
 
 
 }
+
 
 
 

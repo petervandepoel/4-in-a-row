@@ -3,6 +3,7 @@ function CssRenderer(elm) {
   var canvas = $(elm);
   var playerindex = 1;
 
+
 coin = function (board,x,y) {
     this.x = x;
     this.y = y
@@ -15,7 +16,7 @@ coin = function (board,x,y) {
         //set the clicked position (row + column) and update status
         var row = $(this).attr("row");
         var column = $(this).attr("column");
-        $('.status').html("Selected coin: row = " + row + " and column = " + column);
+        //$('.status').html("Selected coin: row = " + row + " and column = " + column);
 
         if(check_valid_move(board,row,column)) {
         var row_to_fill = determine_drop_position(board,column);
@@ -41,7 +42,7 @@ coin = function (board,x,y) {
           //set board
           set_board(board,row_to_fill,column,playerindex);
 
-          determine_if_winner_exists(board,row,column,playerindex);
+          determine_if_winner_exists(board,parseInt(row_to_fill),parseInt(column),playerindex);
 
           playerindex = change_player(playerindex);
 
