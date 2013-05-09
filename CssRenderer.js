@@ -1,6 +1,7 @@
 function CssRenderer(elm) {
-  var board = [];
+  var board = []; //note that board[row][column] is 'reversed' in terms of x,y. So board[3][5] is x=5, y=3;
   var canvas = $(elm);
+  var bot_move = [];
   var playerindex = 1;
 
 
@@ -18,6 +19,10 @@ coin = function (board,x,y) {
         var column = $(this).attr("column");
         //$('.status').html("Selected coin: row = " + row + " and column = " + column);
 
+        do_move(board,row,column,playerindex);
+
+        function do_move(board,row,column,playerindex)
+        {
         if(check_valid_move(board,row,column)) {
         var row_to_fill = determine_drop_position(board,column);
 
@@ -45,6 +50,16 @@ coin = function (board,x,y) {
           determine_if_winner_exists(board,parseInt(row_to_fill),parseInt(column),playerindex);
 
           playerindex = change_player(playerindex);
+
+          };
+
+          if(playerindex==2 && running == true) {
+
+          bot_move = do_bot_move(board,playerindex);
+          do_move(board,bot_move[1],bot_move[0],playerindex);
+          playerindex = change_player(playerindex);
+          }
+
 
 
          } //close if
