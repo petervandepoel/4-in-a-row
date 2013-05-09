@@ -132,35 +132,35 @@ function evaluate_move(board,move,playerindex) {
     var connection_power = 0;
 
     if((total_horizontal_space+total_horizontal_connection_me)>3) {
-      connection_power += total_horizontal_space + 2*total_horizontal_connection_me*total_horizontal_connection_me*total_horizontal_connection_me;
+      connection_power += 2*total_horizontal_connection_me*total_horizontal_connection_me*total_horizontal_connection_me;
     }
 
     if((total_vertical_space+total_vertical_connection_me)>3) {
-      connection_power += total_vertical_space + 2*total_vertical_connection_me*total_vertical_connection_me*total_vertical_connection_me;
+      connection_power += 2*total_vertical_connection_me*total_vertical_connection_me*total_vertical_connection_me;
     }
 
     if((total_diagonal_1_space+total_diagonal_connection_1_me)>3) {
-      connection_power += total_diagonal_1_space + 2*total_diagonal_connection_1_me*total_diagonal_connection_1_me*total_diagonal_connection_1_me;
+      connection_power += 2*total_diagonal_connection_1_me*total_diagonal_connection_1_me*total_diagonal_connection_1_me;
     }
 
     if((total_diagonal_2_space+total_diagonal_connection_2_me)>3) {
-      connection_power += total_diagonal_2_space + 2*total_diagonal_connection_2_me*total_diagonal_connection_2_me*total_diagonal_connection_2_me;
+      connection_power += 2*total_diagonal_connection_2_me*total_diagonal_connection_2_me*total_diagonal_connection_2_me;
     }
 
       if((total_horizontal_space+total_horizontal_connection_opponent)>3) {
-      connection_power += total_horizontal_space + 2*total_horizontal_connection_opponent*total_horizontal_connection_opponent*total_horizontal_connection_opponent;
+      connection_power += 2*total_horizontal_connection_opponent*total_horizontal_connection_opponent*total_horizontal_connection_opponent;
     }
 
     if((total_vertical_space+total_vertical_connection_opponent)>3) {
-      connection_power += total_vertical_space + 2*total_vertical_connection_opponent*total_vertical_connection_opponent*total_vertical_connection_opponent;
+      connection_power += 2*total_vertical_connection_opponent*total_vertical_connection_opponent*total_vertical_connection_opponent;
     }
 
     if((total_diagonal_1_space+total_diagonal_connection_1_opponent)>3) {
-      connection_power += total_diagonal_1_space + 2*total_diagonal_connection_1_opponent*total_diagonal_connection_1_opponent*total_diagonal_connection_1_opponent;
+      connection_power += 2*total_diagonal_connection_1_opponent*total_diagonal_connection_1_opponent*total_diagonal_connection_1_opponent;
     }
 
     if((total_diagonal_2_space+total_diagonal_connection_2_opponent)>3) {
-      connection_power += total_diagonal_2_space + 2*total_diagonal_connection_2_opponent*total_diagonal_connection_2_opponent*total_diagonal_connection_2_opponent;
+      connection_power += 2*total_diagonal_connection_2_opponent*total_diagonal_connection_2_opponent*total_diagonal_connection_2_opponent;
     }
 
     return {evaluated_move: move, score: connection_power};
