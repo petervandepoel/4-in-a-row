@@ -34,22 +34,40 @@ coin = function (board,x,y) {
           //update the position
 
           //set content
-          var $coin = $('<div>').addClass('coin').addClass("row"+row_to_fill).addClass("column"+column).addClass("player"+                playerindex);
+          var $coin = $('<div>').addClass('coin').addClass("row"+row_to_fill).addClass("column"+column);
+
+        //$coin.css({
+        //'transition': 'background-color 1s linear',
+        //'-moz-transition': 'background-color 1s linear',
+        //'-webkit-transition': 'background-color 1s linear',
+        //'-o-transition': 'background-color 1s linear '
+        //});
+
 
           //set position
-          $coin.css("left", 20*column + "px");
-          $coin.css("top", 20*row_to_fill + "px");
+          $coin.css("left", 40*column + "px");
+          $coin.css("top", 40*row_to_fill + "px");
           $coin.attr("row",row_to_fill);
           $coin.attr("column",column);
           //add to canvas
-          canvas.append($coin);
 
-          //set board
+
+
+
+          if(playerindex==1) {
+          setTimeout(function() {$coin.addClass("player1");},1);
+          canvas.append($coin)
+          } else {
+          setTimeout(function() {$coin.addClass("player2");},1);
+          canvas.append($coin)
+          }
+
+                    //set board
           set_board(board,row_to_fill,column,playerindex);
 
           determine_if_winner_exists(board,parseInt(row_to_fill),parseInt(column),playerindex);
 
-          playerindex = change_player(playerindex);
+        playerindex = change_player(playerindex);
 
           };
 
@@ -76,8 +94,8 @@ coin = function (board,x,y) {
                   board[i][j] = new coin(board[i][j],j,i);
                   var $coin = $('<div>').addClass('coin').addClass("row"+j).addClass("column"+i);
 
-      	          $coin.css("left", i*20 + "px");
-                  $coin.css("top", j*20 + "px");
+      	          $coin.css("left", i*40 + "px");
+                  $coin.css("top", j*40 + "px");
                   $coin.attr("row",j);
                   $coin.attr("column",i);
                   canvas.append($coin);

@@ -17,13 +17,13 @@
 
   .coin {
            position: absolute;
-           width: 20px;
-           height: 20px;
+           width: 40px;
+           height: 40px;
            -webkit-border-radius: 10px;
            -moz-border-radius: 10px;
            border-radius: 10px;
            background-color: #DDD9CB;
-  }
+}
 
   .coin:hover {
             opacity: 0.5;
@@ -32,24 +32,35 @@
 
 .player1 {
             background-color: yellow;
+            transition: background-color 1s linear;
+            -moz-transition: background-color 1s linear;
+            -webkit-transition: background-color 1s linear;
+            -o-transition: background-color 1s linear;
+
   }
 
 
 .player2 {
             background-color: red;
+       transition: background-color 1s linear;
+            -moz-transition: background-color 1s linear;
+        -webkit-transition: background-color 1s linear;
+        -o-transition: background-color 1s linear;
+
   }
 
 .status {
     position: absolute;
-    top: 220px;
+    top: 420px;
 }
+
 
 
   </style>
 
   <script>
 
-    
+
 
     $(function() {
 
