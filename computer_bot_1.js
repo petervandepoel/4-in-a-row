@@ -12,15 +12,11 @@ function do_bot_move(board,playerindex) {
   };
 
     for(var j in moves) {
-  evaluated_moves[j] = evaluate_move(board,moves[j],playerindex);
+  evaluated_moves[j] = evaluate_move(board,moves[j],current_player.playerindex);
   if(evaluated_moves[j].score>best_move.score) { best_move.score = evaluated_moves[j].score; best_move.x = moves[j].x; best_move.y = moves[j].y; }
   //console.log("The move_score of move x: " + moves[j].x + ". y: " + moves[j].y + " is: " + evaluated_moves[j].score);
   }
-
-  console.log("The best move is x:> " + best_move.x + " y:> " + best_move.y);
-
   return [best_move.x,best_move.y];
-
 }
 
 function get_available_moves(board) {
@@ -28,11 +24,13 @@ function get_available_moves(board) {
 
  for(var i = 0;i<10;i++) {
     for(var j = 0;j<10;j++) {
-    if(board[0][i].occupied == true) {break;}
-    if(board[j][i].occupied == true) { available_moves.push(board[j-1][i]); break;}
-    if(j==9) {available_moves.push(board[j][i]); break;}
+    if(board[0][i].occupied == true && game_type=="Traditional") {break}; 
+    if(board[j][i].occupied == true && game_type=="Traditional") { available_moves.push(board[j-1][i]); break;} 
+	if(board[j][i].occupied == false && game_type =="Drop_anywhere") { available_moves.push(board[j][i]); }
+	if(j==9 && game_type=="Traditional") {available_moves.push(board[j][i]); break;}
     }
-    }
+	}
+    
   return available_moves;
 }
 
@@ -95,22 +93,22 @@ function evaluate_move(board,move,playerindex) {
     var diagonal_space_1_left = calculate_space(board,move,"down_left");
     var diagonal_space_2_right = calculate_space(board,move,"down_right");
     var diagonal_space_2_left = calculate_space(board,move,"top_left");
-    var right_connection_me = calculate_connections(board,move,playerindex,"right");
-    var left_connection_me = calculate_connections(board,move,playerindex,"left");
-    var top_connection_me =  calculate_connections(board,move,playerindex,"top");
-    var down_connection_me = calculate_connections(board,move,playerindex,"down");
-    var diagonal_connection_1_right_me = calculate_connections(board,move,playerindex,"top_right");
-    var diagonal_connection_1_left_me = calculate_connections(board,move,playerindex,"down_left");
-    var diagonal_connection_2_right_me = calculate_connections(board,move,playerindex,"down_right");
-    var diagonal_connection_2_left_me = calculate_connections(board,move,playerindex,"top_left");
-    var right_connection_opponent = calculate_connections(board,move,change_player(playerindex),"right");
-    var left_connection_opponent = calculate_connections(board,move,change_player(playerindex),"left");
-    var top_connection_opponent = calculate_connections(board,move,change_player(playerindex),"top");
-    var down_connection_opponent = calculate_connections(board,move,change_player(playerindex),"down");
-    var diagonal_connection_1_right_opponent = calculate_connections(board,move,change_player(playerindex),"top_right");
-    var diagonal_connection_1_left_opponent = calculate_connections(board,move,change_player(playerindex),"down_left");
-    var diagonal_connection_2_right_opponent = calculate_connections(board,move,change_player(playerindex),"down_right");
-    var diagonal_connection_2_left_opponent = calculate_connections(board,move,change_player(playerindex),"top_left");
+    var right_connection_me = calculate_connections(board,move,current_player.playerindex,"right");
+    var left_connection_me = calculate_connections(board,move,current_player.playerindex,"left");
+    var top_connection_me =  calculate_connections(board,move,current_player.playerindex,"top");
+    var down_connection_me = calculate_connections(board,move,current_player.playerindex,"down");
+    var diagonal_connection_1_right_me = calculate_connections(board,move,current_player.playerindex,"top_right");
+    var diagonal_connection_1_left_me = calculate_connections(board,move,current_player.playerindex,"down_left");
+    var diagonal_connection_2_right_me = calculate_connections(board,move,current_player.playerindex,"down_right");
+    var diagonal_connection_2_left_me = calculate_connections(board,move,current_player.playerindex,"top_left");
+    var right_connection_opponent = calculate_connections(board,move,other_player.playerindex,"right");
+    var left_connection_opponent = calculate_connections(board,move,other_player.playerindex,"left");
+    var top_connection_opponent = calculate_connections(board,move,other_player.playerindex,"top");
+    var down_connection_opponent = calculate_connections(board,move,other_player.playerindex,"down");
+    var diagonal_connection_1_right_opponent = calculate_connections(board,move,other_player.playerindex,"top_right");
+    var diagonal_connection_1_left_opponent = calculate_connections(board,move,other_player.playerindex,"down_left");
+    var diagonal_connection_2_right_opponent = calculate_connections(board,move,other_player.playerindex,"down_right");
+    var diagonal_connection_2_left_opponent = calculate_connections(board,move,other_player.playerindex,"top_left");
 
     var total_horizontal_space = right_space + left_space;
     var total_vertical_space = top_space + down_space;

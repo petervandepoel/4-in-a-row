@@ -3,19 +3,19 @@
 <html>
 
 <head>
-  <title>4 in a row!</title>
+<title>4 in a row!</title>
 
-  <script src="CssRenderer.js"></script>
-  <script src="Game.js"></script>
-  <script src="computer_bot_1.js"></script>
-  <script src="jquery-1.9.0.min.js"></script>
-  <style type="text/css" rel="stylesheet">
+<script src="CssRenderer.js"></script>
+<script src="Game.js"></script>
+<script src="computer_bot_1.js"></script>
+<script src="jquery-1.9.0.min.js"></script>
+<style type="text/css" rel="stylesheet">
 
-  .board {
+.board {
             position: relative;
-  }
+}
 
-  .coin {
+.coin {
            position: absolute;
            width: 40px;
            height: 40px;
@@ -25,10 +25,9 @@
            background-color: #DDD9CB;
 }
 
-  .coin:hover {
+.coin:hover {
             opacity: 0.5;
-
-  }
+}
 
 .player1 {
             background-color: yellow;
@@ -36,46 +35,98 @@
             -moz-transition: background-color 1s linear;
             -webkit-transition: background-color 1s linear;
             -o-transition: background-color 1s linear;
-
-  }
+}
 
 
 .player2 {
             background-color: red;
-       transition: background-color 1s linear;
+       		transition: background-color 1s linear;
             -moz-transition: background-color 1s linear;
-        -webkit-transition: background-color 1s linear;
-        -o-transition: background-color 1s linear;
-
-  }
+        	-webkit-transition: background-color 1s linear;
+        	-o-transition: background-color 1s linear;
+}
 
 .status {
     position: absolute;
-    top: 420px;
+	top: 450px;
+    }
+
+.games {
+    position: absolute;
+    top: 10px;
 }
 
+.header {
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 20px;
+	color: #837e7c 	
+}
 
+.settings {
+	font-family: Tahoma, Arial, sans-serif;
+	font-size: 14px;
+	color: #837e7c 	
+} 
 
-  </style>
+</style>
 
-  <script>
-
-
-
-    $(function() {
-
-    var NewRenderer = new CssRenderer($('.board'));
-    NewRenderer.publics.drawBoard();
-
+<script>
+    var NewRenderer = {};
+	
+		$(function() {
+    NewRenderer = new CssRenderer($('.board'));
+   	NewRenderer.publics.drawBoard();
+		
+	$('.start').click(function() {
+		var player_1 = $('input:radio[name=player1options]:checked').val();	
+		var player_2 = $('input:radio[name=player2options]:checked').val();	
+		game_type = $('input:radio[name=game_type]:checked').val();	
+			
+		if(typeof player_1 === "undefined" || typeof player_2 === "undefined" || typeof game_type === "undefined" ) {
+		alert("Please select your players and gametype.");
+		}
+		else {
+		player1 = new player(1,$('input:radio[name=player1options]:checked').val());
+		player2 = new player(2,$('input:radio[name=player2options]:checked').val());
+		current_player = player1;
+		other_player = player2;
+				
+		$('.settings').hide(); 
+		running = true;
+		do_next_move();
+		}	
+		
+	});
+	
+	
+		
 });
-
-
-  </script>
+</script>
 
 </head>
 
 <body>
-        <div class="board"></div>
+        <div class="header">4-in-row game</div>
+		<div class="settings">
+			<BR>Welcome to the game.
+			<form>
+				Please select player 1: 
+				<input type="radio" name="player1options" value="Human" checked="checked"/>Human
+				<input type="radio" name="player1options" value="Computer" /> Computer<BR>
+				
+				Please select player 2: 
+				<input type="radio" name="player2options" value="Human"/>Human
+				<input type="radio" name="player2options" value="Computer" checked="checked"/> Computer<BR>
+				
+				Please select game type: 
+				<input type="radio" name="game_type" value="Traditional" checked="checked"/>Traditional game 
+				<input type="radio" name="game_type" value="Drop_anywhere"/>Special game*<BR><BR>
+			</form>
+			*In the special game coins can be dropped at each position (this is fun!) <BR>
+			<input type='button' class="start" value="Start the game!"/>.
+			
+		</div>
+		<div class="board"></div>
         <div class="status"></div>
 </body>
 
