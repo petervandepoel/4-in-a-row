@@ -1,29 +1,20 @@
+var board = []; 
+var player1, player2,current_player, other_player = {};
 var running = false;
 var winner = 0;
-var current_player = {};
-var other_player = {};
-var player1 = {};
-var player2 = {};
-var board = []; 
 var status_message = "";
 var game_type = "";
-
 
 var player = function(index,type) {
 	this.playerindex = index;
 	this.playertype = type;
 };
 
-
 var do_move = function(board,row,column) {
-	if(running == true)
-	{
-	if(check_valid_move(board,row,column)==true)
-	{
+	if(running == true && check_valid_move(board,row,column)==true) {
 	var row_to_fill = determine_drop_position(board,row,column);
 	
 	NewRenderer.Renderboard(board,row_to_fill,column,current_player.playerindex);
-	
 	set_board(board,row_to_fill,column,current_player.playerindex);
 	
 	if(determine_if_winner_exists(board,parseInt(row_to_fill),parseInt(column),current_player.playerindex)==false)
@@ -34,8 +25,7 @@ var do_move = function(board,row,column) {
 	
 	$('.status').html(status_message);
 	}
-	}
-};
+	};
 
 function do_next_move() {
 	if(current_player.playertype=="Computer" && running == true) {
@@ -44,9 +34,7 @@ function do_next_move() {
 	}
 };
 
-
 function check_valid_move(board,row,column) {
-	if(running == false) { return false; }
 	if(board[row][column].occupied == true) {
     status_message = "There is already a coin on this field.";
 	return false;
@@ -72,7 +60,7 @@ function determine_drop_position(board,row,column) {
 
 function set_board(board,row,column,playerindex) {
     board[row][column].occupied = true;
-    board[row][column].by = current_player.playerindex;
+    board[row][column].by = playerindex;
 }
 
 function change_player(current_player) {
@@ -157,6 +145,3 @@ if(total_horizontal > 3 || total_vertical > 3 || total_diagonal_1 > 3 || total_d
 	
 }
 };
-
-
-
